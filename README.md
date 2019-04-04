@@ -1,2 +1,2 @@
-# metabo-la-boite
-metabo-la-boîte - Matlab coding for living
+# metabo-la-boîte
+metabo-la-boîte - Matlab coding for living (just trying)
