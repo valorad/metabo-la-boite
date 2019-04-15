@@ -14,7 +14,7 @@ ud2(1:5) = 1;
 % h(t) = t * e^(-2t) (u(t-2) - u(t-5))
 h = t .* exp(-2 .* t) .* ud2;
 
-y = conv(x, 5);
+y = conv(x, h);
 
 figure(1)
 plot(y)
