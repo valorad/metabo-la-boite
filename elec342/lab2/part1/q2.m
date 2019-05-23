@@ -45,87 +45,102 @@ else
     disp("Not linear")
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % part b)
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y_a[n] = x^2[n]
 % y_b[n] = 2x[n] + 5δ[ n ]
 
-x1 = (0: 1);
-x2 = 2* x1;
-y_a = x1 .^ 2;
+nA = (0: 1);
+x1A = (0: 1);
+x2A = 2 * x1A;
+
+% right-shift k0 units used to verify TI
+k0 = 5;
 
 % verify Linearity
 
-if (a * x1 .^ 2 + b * x2 .^ 2) == ((x1 * a + x2 * b) .^ 2)
+if isLinear(@bGetY1, x1A, x2A)
 	disp("Outputs consistent with a linear system")
 else
     disp("Not linear")
 end
 
-
 % verify tI
 
-% right-shift k0 units
-k0 = 5;
-% then shifted version of x1 is
-x1_s = horzcat(zeros(1, k0), x1);
-
-y_as = x1_s .^ 2;
-
-if y_as == horzcat(zeros(1, k0), y_a)
+if isTimeInv(@bGetY1withShift, nA, x1A, k0)
 	disp("This system is time-invariant")
 else
     disp("This system is NOT time-invariant")
 end
 
-figure(2)
-subplot(2, 2, 1)
-stem(x1)
-subplot(2, 2, 2)
-stem(y_a,'r')
+% figure(2)
+% subplot(2, 2, 1)
+% stem(x1)
+% subplot(2, 2, 2)
+% stem(y_a,'r')
 
-subplot(2, 2, 3)
-stem(x1_s)
-subplot(2, 2, 4)
-stem(y_as,'r')
+% subplot(2, 2, 3)
+% stem(x1_s)
+% subplot(2, 2, 4)
+% stem(y_as,'r')
 
 % create delta function
-deltaN = x1;
-deltaN(1) = 1;
-length = max(deltaN) + 1;
-if length >= 2
-    deltaN(2:length) = 0;
-end
+% deltaN = x1A;
+% deltaN(1) = 1;
+% length = max(deltaN) + 1;
+% if length >= 2
+%     deltaN(2:length) = 0;
+% end
 
 
 % verify Linearity
 
-if ((a * x1 * 2 + 5 * deltaN) + (b * x2 * 2 + 5 * deltaN)) == ((x1 * a + x2 * b) * 2 + 5 * deltaN)
+if isLinear(@bGetY2, x1A, x2A)
 	disp("Outputs consistent with a linear system")
 else
     disp("Not linear")
 end
 
-% if ((a * x1 * 2) + (b * x2 * 2)) == ((x1 * a + x2 * b) * 2)
-% 	disp("Outputs consistent with a linear system")
-% else
-%     disp("Not linear")
-% end
 
-% verify tI
-
-
-y_b = x1 * 2 + 5 * deltaN;
-
-x2_s = horzcat(zeros(1, k0), x1);
-y_bs = x2_s * 2 + 5 * horzcat(zeros(1, k0), deltaN);
-
-if y_bs == horzcat(zeros(1, k0), y_b)
+if isTimeInv(@bGetY2withShift, nA, x1A, k0)
 	disp("This system is time-invariant")
 else
     disp("This system is NOT time-invariant")
 end
 
 
+function y1 = bGetY1(x)
+    y1 = x .^ 2;
+end
 
+function y1 = bGetY1withShift(n, x, shift, cmode)
+    % n_ramp = getRamp(cmode)
+    y1 = delay(x, shift) .^ 2;
+end
 
+function y2 = bGetY2(x)
+    [~, sizeX] = size(x);
+    y2 = x * 2 + 5 * createDeltaN(sizeX);
+end
 
+function y2 = bGetY2withShift(n, x, shift, cmode)
+    % n_ramp = getRamp(cmode)
+    [~, sizeX] = size(x);
+    y2 = delay(x, shift) * 2 + 5 * delay(createDeltaN(sizeX), shift);
+end
+
+function n_ramp = getRamp(cmode, shift)
+    if cmode == "CALCY"
+        n_ramp = delay(n, shift);
+    else
+        % fill up 0s to ensure equal size
+        n_ramp = advance(n, shift);
+    end
+end
+
+function deltaN = createDeltaN(length)
+    % create delta function
+    deltaN = zeros(1, length);
+    deltaN(1) = 1;
+end
