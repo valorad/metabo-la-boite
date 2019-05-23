@@ -2,44 +2,38 @@ clear
 clc
 close all
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % part a)
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y[n] = 2 * x[n]
 % x1[n] = sin( (2*pi /10 ) * n )
 % x2[n] = cos( (2*pi /10 ) * n )
 % 0 <= n <= 10
 
-% To verify linearity, for simplicity, we select a = 10 and b = 5
-a = 10;
-b = 5;
-
 n = (0: 10);
 
-x1_a = a * sin(2 * pi .* n / 10);
-x2_b = b * cos(2 * pi .* n / 10);
+x1 = a * sin(2 * pi .* n / 10);
+x2 = b * cos(2 * pi .* n / 10);
 
-y1_a = 2 .* x1_a;
-y2_b = 2 .* x2_b;
+[resultA, ya, yb, x_ab, y_ab] = isLinearDetail(@aGetY1, x1, x2);
 
 figure(1)
 subplot(3, 1, 1);
-plot(x1_a)
+plot(x1)
 hold on
-plot(y1_a)
+plot(ya)
 
 subplot(3, 1, 2);
-plot(x2_b)
+plot(x2)
 hold on
-plot(y2_b)
-
-x3 = x1_a + x2_b;
-y3 = y1_a + y2_b;
+plot(yb)
 
 subplot(3, 1, 3);
-plot(x3)
+plot(x_ab)
 hold on
-plot(y3)
+plot(y_ab)
 
-if y3 == (x1_a + x2_b) * 2
+if resultA
 	disp("Outputs consistent with a linear system")
 else
     disp("Not linear")
@@ -109,6 +103,9 @@ else
     disp("This system is NOT time-invariant")
 end
 
+function y1 = aGetY1(x)
+    y1 = 2 * x;
+end
 
 function y1 = bGetY1(x)
     y1 = x .^ 2;
