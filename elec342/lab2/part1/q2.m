@@ -12,8 +12,8 @@ close all
 
 n = (0: 10);
 
-x1 = a * sin(2 * pi .* n / 10);
-x2 = b * cos(2 * pi .* n / 10);
+x1 = sin(2 * pi .* n / 10);
+x2 = cos(2 * pi .* n / 10);
 
 [resultA, ya, yb, x_ab, y_ab] = isLinearDetail(@aGetY1, x1, x2);
 
@@ -52,8 +52,10 @@ x2A = 2 * x1A;
 % right-shift k0 units used to verify TI
 k0 = 5;
 
-% verify Linearity
+disp("Case1: n = [0, 1]")
 
+disp("For y[n] = x^2[n]")
+% verify Linearity
 if isLinear(@bGetY1, x1A, x2A)
 	disp("Outputs consistent with a linear system")
 else
@@ -67,6 +69,8 @@ if isTimeInv(@bGetY1withShift, nA, x1A, k0)
 else
     disp("This system is NOT time-invariant")
 end
+
+
 
 % figure(2)
 % subplot(2, 2, 1)
@@ -87,9 +91,8 @@ end
 %     deltaN(2:length) = 0;
 % end
 
-
+disp("For y[n] = 2x[n] + 5δ[n]")
 % verify Linearity
-
 if isLinear(@bGetY2, x1A, x2A)
 	disp("Outputs consistent with a linear system")
 else
@@ -102,6 +105,46 @@ if isTimeInv(@bGetY2withShift, nA, x1A, k0)
 else
     disp("This system is NOT time-invariant")
 end
+
+
+nB = (0: 20);
+x1B = nB;
+x2B = 2 * x1B;
+
+
+disp("Case2: n = [0, 1, ..., 20]")
+
+disp("For y[n] = x^2[n]")
+% verify Linearity
+if isLinear(@bGetY1, x1B, x2B)
+	disp("Outputs consistent with a linear system")
+else
+    disp("Not linear")
+end
+
+% verify tI
+
+if isTimeInv(@bGetY1withShift, nB, x1B, k0)
+	disp("This system is time-invariant")
+else
+    disp("This system is NOT time-invariant")
+end
+
+disp("For y[n] = 2x[n] + 5δ[n]")
+% verify Linearity
+if isLinear(@bGetY2, x1B, x2B)
+	disp("Outputs consistent with a linear system")
+else
+    disp("Not linear")
+end
+
+
+if isTimeInv(@bGetY2withShift, nB, x2B, k0)
+	disp("This system is time-invariant")
+else
+    disp("This system is NOT time-invariant")
+end
+
 
 function y1 = aGetY1(x)
     y1 = 2 * x;
