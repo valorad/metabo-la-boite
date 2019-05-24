@@ -70,27 +70,6 @@ else
     disp("This system is NOT time-invariant")
 end
 
-
-
-% figure(2)
-% subplot(2, 2, 1)
-% stem(x1)
-% subplot(2, 2, 2)
-% stem(y_a,'r')
-
-% subplot(2, 2, 3)
-% stem(x1_s)
-% subplot(2, 2, 4)
-% stem(y_as,'r')
-
-% create delta function
-% deltaN = x1A;
-% deltaN(1) = 1;
-% length = max(deltaN) + 1;
-% if length >= 2
-%     deltaN(2:length) = 0;
-% end
-
 disp("For y[n] = 2x[n] + 5δ[n]")
 % verify Linearity
 if isLinear(@bGetY2, x1A, x2A)
@@ -154,7 +133,7 @@ function y1 = bGetY1(x)
     y1 = x .^ 2;
 end
 
-function y1 = bGetY1withShift(n, x, shift, cmode)
+function y1 = bGetY1withShift(x, n, shift, cmode)
     % n_ramp = getRamp(cmode)
     y1 = delay(x, shift) .^ 2;
 end
@@ -164,7 +143,7 @@ function y2 = bGetY2(x)
     y2 = x * 2 + 5 * createDeltaN(sizeX);
 end
 
-function y2 = bGetY2withShift(n, x, shift, cmode)
+function y2 = bGetY2withShift(x, n, shift, cmode)
     % n_ramp = getRamp(cmode)
     [~, sizeX] = size(x);
     y2 = delay(x, shift) * 2 + 5 * delay(createDeltaN(sizeX), shift);
