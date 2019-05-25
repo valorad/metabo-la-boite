@@ -30,28 +30,28 @@ x1_n_odd = (x1_n - x1_minusN) / 2;
 % plot them out
 figure(1)
 subplot(2, 2, 1)
-plot(n1_flip, x1_minusN)
+stem(n1_flip, x1_minusN)
 
 title("x[-n]")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 2)
-plot(n1, x1_n)
+stem(n1, x1_n)
 
 title("x[n]")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 3)
-plot((-10: 10), x1_n_even)
+stem((-10: 10), x1_n_even)
 
 title("even part")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 4)
-plot((-10: 10), x1_n_odd)
+stem((-10: 10), x1_n_odd)
 
 title("odd part")
 xlabel('n')
@@ -81,28 +81,28 @@ x2_n_odd = (x2_n - x2_minusN) / 2;
 % plot them out
 figure(2)
 subplot(2, 2, 1)
-plot(n2_flip, x2_minusN)
+stem(n2_flip, x2_minusN)
 
 title("x[-n]")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 2)
-plot(n2, x2_n)
+stem(n2, x2_n)
 
 title("x[n]")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 3)
-plot((-5: 5), x2_n_even)
+stem((-5: 5), x2_n_even)
 
 title("even part")
 xlabel('n')
 ylabel('x')
 
 subplot(2, 2, 4)
-plot((-5: 5), x2_n_odd)
+stem((-5: 5), x2_n_odd)
 
 title("odd part")
 xlabel('n')

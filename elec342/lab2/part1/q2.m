@@ -19,19 +19,26 @@ x2 = cos(2 * pi .* n / 10);
 
 figure(1)
 subplot(3, 1, 1);
-plot(x1)
+stem(x1)
 hold on
-plot(ya)
+stem(ya)
+legend("x_1", "y_1")
 
 subplot(3, 1, 2);
-plot(x2)
+stem(x2)
 hold on
-plot(yb)
+stem(yb)
+legend("x_2", "y_2")
+
+x3 = x1 + x2;
 
 subplot(3, 1, 3);
-plot(x_ab)
+stem(x3)
 hold on
-plot(y_ab)
+stem(y_ab)
+hold on
+stem(ya + yb)
+legend("x_3", "y_3", "y_4")
 
 if resultA
 	disp("Outputs consistent with a linear system")
