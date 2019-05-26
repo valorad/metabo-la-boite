@@ -16,7 +16,7 @@ function [result] = isLinear(func, x1, x2)
   a = 10;
   b = 5;
 
-  if (a .* func(x1) + b .* func(x2) - func(a .* x1 + b .* x2) <= 0.000000001)
+  if (abs(a .* func(x1) + b .* func(x2) - func(a .* x1 + b .* x2)) <= 0.000000001)
     result = true;
   end
   

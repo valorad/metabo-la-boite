@@ -22,7 +22,7 @@ function [result, ya, yb, x_ab, y_ab] = isLinearDetail(func, x1, x2)
     x_ab = a .* x1 + b .* x2;
     y_ab = func(x_ab);
   
-    if (ya + yb - y_ab <= 0.000000001)
+    if (abs(ya + yb - y_ab) <= 0.000000001)
       result = true;
     end
     
