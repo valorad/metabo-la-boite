@@ -1,5 +1,5 @@
 function [result, yShiftXOnly, yShift] = isTimeInvDetail(func, n, x, shift)
-    % ISTIMEINV Tell if is time-invariant
+    % ISTIMEINV Tell if is time-invariant with detailed output
     % func: is of type (x, n, shift, cmode) => [] expression of y as a MATLAB function
     % x: the input signal
     % shift: (optional) The delay selected to verify time-invariance
