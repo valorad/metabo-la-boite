@@ -7,16 +7,27 @@ close all
 
 dataLength = length(data0);
 
+mse_Inp_Dis = sum( (data0 - disData) .^ 2 ) / dataLength;
+
+disp("MSE between Original and Input is " + mse_Inp_Dis);
+
+
 hDistorted = fft(disData);
 hOriginal = fft(data0);
 
-hChannel = hDistorted ./ hOriginal;
-hEqualizer = 1 ./ hChannel;
+% hChannel =  ./ hOriginal;
+% hEqualizer = 1 ./ hChannel;
+% can be simplified as
+hEqualizer = hOriginal ./ hDistorted;
 
 hProc = hDistorted .* hEqualizer;
 dataProc = ifft(hProc);
+audiowrite("musics/Recovered.wav", dataProc, srate0)
 
-mse = sum( (data0 - dataProc) .^ 2 ) / dataLength;
+mse_inp_Rec = sum( (data0 - dataProc) .^ 2 ) / dataLength;
+
+disp("MSE between Original and Input is " + mse_inp_Rec);
+
 
 
 figure(1);
