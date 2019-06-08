@@ -47,7 +47,7 @@ samplingRate = input("The samplingRate is selected as ...");
 N = floor(samplingRate * 2);
 
 for i = (1: 5)
-    windowSize = input("The windowSize is selected as ...");
+    windowSize = input("The windowSize No. " + i + " is selected as ...");
     n = (0: windowSize * N);
     w = ( -windowSize * pi : 0.05 : pi * windowSize );
     x = sin(2 * pi * n / N);

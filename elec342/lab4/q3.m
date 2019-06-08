@@ -22,11 +22,18 @@ hEqualizer = hOriginal ./ hDistorted;
 
 hProc = hDistorted .* hEqualizer;
 dataProc = ifft(hProc);
-audiowrite("musics/Recovered.wav", dataProc, srate0)
+
+% write the audio file
+
+try
+  audiowrite("musics/Recovered.wav", dataProc, srate0)
+catch e
+  warning("Failed to write the audio file: " + getReport(e));
+end
 
 mse_inp_Rec = sum( (data0 - dataProc) .^ 2 ) / dataLength;
 
-disp("MSE between Original and Input is " + mse_inp_Rec);
+disp("MSE between the Before and the After is " + mse_inp_Rec);
 
 
 
