@@ -16,8 +16,10 @@ ar = round(a);
 
 figure(1)
 pzmap(tf(b,a))
+title("Original")
 
 % rounded pole-zero plot
 
 figure(2)
 pzmap(tf(br,ar))
+title("Rounded")

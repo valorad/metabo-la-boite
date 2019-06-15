@@ -52,6 +52,8 @@ order = 8;
 [H, freqRange] = freqz(b, a);
 
 y = filter(b, a, x);
+xFreq = fft(x);
+yFreq = fft(y);
 
 figure(2);
 
